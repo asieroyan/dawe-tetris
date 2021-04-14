@@ -148,7 +148,6 @@ Shape.prototype.move = function(dx, dy) {
 	for (block of this.blocks) {
 		block.move(dx,dy);
 	}
-	return new Shape()
 };
 
 
