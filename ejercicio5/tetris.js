@@ -111,6 +111,16 @@ Block.prototype.can_move = function(board, dx, dy) {
   // e indica si es posible mover el bloque actual si 
  // incrementáramos su posición en ese valor
 
+    var xNueva=this.x+dx;
+    var yNueva=this.y+dy;
+
+    if(board.can_move(xNueva,yNueva)){
+        return true;
+    }else{
+        return false;
+    }
+
+
 }
 
 
@@ -150,6 +160,20 @@ Shape.prototype.draw = function() {
 Shape.prototype.can_move = function(board, dx, dy) {
 
 // TU CÓDIGO AQUÍ: comprobar límites para cada bloque de la pieza
+    var seguir=true;
+    var i=0;
+    if(dx===0 && dy===0){
+        return true;
+    }else {
+        while (i < this.blocks.length && seguir === true) {
+            var blockAct = this.blocks[i];
+            if (blockAct.can_move(board, dx, dy) === false) {
+                seguir = false;
+            }
+            i++;
+        }
+        return seguir;
+    }
 };
 
 /* Método introducido en el EJERCICIO 4 */
@@ -309,7 +333,14 @@ Board.prototype.can_move = function(x,y){
  	// hasta ahora, este método siempre devolvía el valor true. Ahora,
  	// comprueba si la posición que se le pasa como párametro está dentro de los  
 	// límites del tablero y en función de ello, devuelve true o false.
-	return true;
+
+    if((x>=0 && x<this.width) && (y>=0 && y<this.height)){
+        console.log("Board can move: true");
+        return true;
+    }else{
+        console.log("Board can move: false");
+        return false;
+    }
 };
 
 // ==================== Tetris ==========================
@@ -332,7 +363,7 @@ Tetris.prototype.create_new_shape = function() {
 	// Devolver la referencia de esa pieza nueva
 
 	var forma = Tetris.SHAPES[Math.floor(Math.random() * Tetris.SHAPES.length)];
-	var center = new Point(0, 0);
+	var center = new Point(2, 0);
 	return new forma(center);
 }
 
@@ -394,7 +425,8 @@ Tetris.prototype.do_move = function(direction) {
 	// obtendrás el desplazamiento (dx, dy). A continuación analiza si la pieza actual
 	// se puede mover con ese desplazamiento. En caso afirmativo, mueve la pieza.
 	// this.current_shape.move(Tetris.DIRECTION[direction][0],Tetris.DIRECTION[direction][1]);
-	if (this.board.can_move(this.current_shape)) {
+
+	if (this.current_shape.can_move(this.board, Tetris.DIRECTION[direction][0], Tetris.DIRECTION[direction][1])) {
 		this.current_shape.move(Tetris.DIRECTION[direction][0],Tetris.DIRECTION[direction][1]);
 	}
 
