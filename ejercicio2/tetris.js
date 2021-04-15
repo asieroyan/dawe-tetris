@@ -208,7 +208,7 @@ function Z_Shape(center) {
 		new Point(center.x, center.y + 1),
 		new Point(center.x + 1, center.y + 1)];
 
-	Shape.prototype.init.call(this, coords, "pink");
+	Shape.prototype.init.call(this, coords, "magenta");
 }
 
 // TU CÓDIGO AQUÍ: La clase Z_Shape hereda de la clase Shape
