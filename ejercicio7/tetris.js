@@ -360,7 +360,6 @@ Board.prototype.can_move = function(x,y){
 	}
 	/* EJERCICIO 7 */
 	// TU CÓDIGO AQUÍ: código para detectar colisiones. Si la posición x,y está en el diccionario grid, devolver false y true en cualquier otro caso.
- 
 	return true;
 };
 
