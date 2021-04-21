@@ -350,17 +350,19 @@ Board.prototype.can_move = function(x,y){
  	// hasta ahora, este método siempre devolvía el valor true. Ahora,
  	// comprueba si la posición que se le pasa como párametro está dentro de los  
 	// límites del tablero y en función de ello, devuelve true o false.
-
+	var move = true;
 	if((x>=0 && x<this.width) && (y>=0 && y<this.height)){
-		console.log("Board can move: true");
-		return true;
-	}else{
-		console.log("Board can move: false");
-		return false;
+		var	puntoStr = "" + x + ", " + y + "";
+		if (puntoStr in this.grid.keys) {
+			move = false;
+		}
+	} else {
+		move = false;
 	}
 	/* EJERCICIO 7 */
 	// TU CÓDIGO AQUÍ: código para detectar colisiones. Si la posición x,y está en el diccionario grid, devolver false y true en cualquier otro caso.
-	return true;
+
+	return move;
 };
 
 // ==================== Tetris ==========================
