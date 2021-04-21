@@ -329,7 +329,14 @@ Board.prototype.draw_shape = function(shape) {
 Board.prototype.add_shape = function(shape){
 
 	// TU CÓDIGO AQUÍ: meter todos los bloques de la pieza que hemos recibido por parámetro en la estructura de datos grid
-
+	var i = 0;
+	while (i < shape.blocks.length) {
+		xAct = shape.blocks[i].x;
+		yAct = shape.blocks[i].y;
+		var punto = "" + xAct + ", " + yAct+ "";
+		this.grid.push(punto, shape.blocks[i]);
+		i++;
+	}
 }
 
 
@@ -438,6 +445,9 @@ Tetris.prototype.do_move = function(direction) {
 
 	if (this.current_shape.can_move(this.board, Tetris.DIRECTION[direction][0], Tetris.DIRECTION[direction][1])) {
 		this.current_shape.move(Tetris.DIRECTION[direction][0],Tetris.DIRECTION[direction][1]);
+	} else if (direction === "Down"){
+		this.board.add_shape(this.current_shape);
+		this.current_shape = this.create_new_shape();
+		this.board.draw_shape(this.current_shape);
 	}
-
 }
