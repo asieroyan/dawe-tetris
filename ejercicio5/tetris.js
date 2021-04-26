@@ -412,8 +412,6 @@ Tetris.prototype.key_pressed = function(e) {
 			this.do_move('Right');
 			break;
 	}
-
-
 }
 
 Tetris.prototype.do_move = function(direction) {
