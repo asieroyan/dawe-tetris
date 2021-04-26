@@ -309,6 +309,7 @@ Z_Shape.prototype = new Shape()
 function Board(width, height) {
 	this.width = width;
 	this.height = height;
+	this.grid = {};
 }
 
 // Si la pieza nueva puede entrar en el tablero, pintarla y devolver true.
@@ -334,7 +335,7 @@ Board.prototype.add_shape = function(shape){
 		xAct = shape.blocks[i].x;
 		yAct = shape.blocks[i].y;
 		var punto = "" + xAct + ", " + yAct+ "";
-		this.grid.push(punto, shape.blocks[i]);
+		this.grid[punto] = shape.blocks[i];
 		i++;
 	}
 }
@@ -428,6 +429,8 @@ Tetris.prototype.key_pressed = function(e) {
 		case 39: // key right
 			this.do_move('Right');
 			break;
+		case 32: //space
+			this.do_move('Space');
 	}
 
 
@@ -442,8 +445,16 @@ Tetris.prototype.do_move = function(direction) {
 	// obtendrás el desplazamiento (dx, dy). A continuación analiza si la pieza actual
 	// se puede mover con ese desplazamiento. En caso afirmativo, mueve la pieza.
 	// this.current_shape.move(Tetris.DIRECTION[direction][0],Tetris.DIRECTION[direction][1]);
-
-	if (this.current_shape.can_move(this.board, Tetris.DIRECTION[direction][0], Tetris.DIRECTION[direction][1])) {
+	console.log(direction);
+	if (direction === "Space") {
+		while (this.current_shape.can_move(this.board, Tetris.DIRECTION['Down'][0], Tetris.DIRECTION['Down'][1])) {
+			this.current_shape.move(Tetris.DIRECTION['Down'][0], Tetris.DIRECTION['Down'][1]);
+		}
+		this.board.add_shape(this.current_shape);
+		this.current_shape = this.create_new_shape();
+		this.board.draw_shape(this.current_shape);
+	}
+	else if (this.current_shape.can_move(this.board, Tetris.DIRECTION[direction][0], Tetris.DIRECTION[direction][1])) {
 		this.current_shape.move(Tetris.DIRECTION[direction][0],Tetris.DIRECTION[direction][1]);
 	} else if (direction === "Down"){
 		this.board.add_shape(this.current_shape);
