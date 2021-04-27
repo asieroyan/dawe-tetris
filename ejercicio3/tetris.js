@@ -268,7 +268,7 @@ Tetris.prototype.create_new_shape = function(){
 	// Devolver la referencia de esa pieza nueva
 
 	var forma = Tetris.SHAPES[Math.floor(Math.random() * Tetris.SHAPES.length)];
-	var center = new Point(0,0);
+	var center = new Point(this.board.width/2,0);
 	return new forma(center);
 }
 
