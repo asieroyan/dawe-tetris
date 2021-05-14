@@ -119,8 +119,6 @@ Block.prototype.can_move = function(board, dx, dy) {
 	}else{
 		return false;
 	}
-
-
 }
 
 
@@ -139,16 +137,13 @@ Shape.prototype.init = function(coords, color) {
 	// Post-condición: para cada coordenada, crea un bloque de ese color y lo guarda en un bloque-array.
 	this.coords = coords;
 	this.color = color;
-	this.blocks = [];
+	this.blocks = coords.map(coord => new Block(coord, color));
 };
 
 Shape.prototype.draw = function() {
 	// TU CÓDIGO AQUÍ: método que debe pintar en pantalla todos los bloques
 	// que forman la Pieza
-	for (var i = 0; i < 4; i++) {
-		var point = this.coords[i];
-		var block = new Block(point, this.color);
-		this.blocks.push(block);
+	for (let block of this.blocks) {
 		block.draw();
 	}
 };

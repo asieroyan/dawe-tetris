@@ -191,16 +191,12 @@ Shape.prototype.can_rotate = function(board) {
 		let x = this.center_block.x - this.rotation_dir * this.center_block.y + this.rotation_dir * block.y;
 		let y = this.center_block.y + this.rotation_dir * this.center_block.x - this.rotation_dir * block.x;
 
-		let resultX = x - block.x;
-		let resultY = y - block.y;
-
 		let key = `${x},${y}`;
-		if (key in board.grid) {
-			return false;
+		if (!((x>=0 && x<board.width) && (y>=0 && y<board.height)) || (key in board.grid)){
+			return false
 		}
 	}
 	return true;
-
 };
 
 /* Método introducido en el EJERCICIO 8 */
