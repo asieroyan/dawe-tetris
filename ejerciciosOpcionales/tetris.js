@@ -575,7 +575,7 @@ Board.prototype.game_over = function() {
 	let fondo = document.getElementById("fondo");
 	fondo.pause();
 	Tetris.AUDIO = false;
-	alert("Game over, Refresh for restart.");
+	alert("PUNTUACIÓN: " + puntuacion + " \n Partida finalizada. Refresque para volver a jugar");
 }
 
 
