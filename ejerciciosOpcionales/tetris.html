@@ -6,7 +6,12 @@
    <script src="tetris.js"></script>
 </head>
 <body>
+
     <canvas id="canvas" width="300" height="600"></canvas>
+    <h2>Puntuación: </h2>
+    <h3 id="puntuacion"></h3>
+
+    <audio id="fondo" src="fondo.mp3" autoplay loop></audio>
 
 <script>
 // ===== main ====
@@ -20,6 +25,7 @@ ctx.fillRect(0,0,canvas.width,canvas.height);
 
 var game = new Tetris();
 game.init();
+
 
 </script>
 </body>

@@ -547,16 +547,34 @@ Board.prototype.remove_complete_rows = function(){
 //   si la fila y está completa
 //      borrar fila y
 //      mover hacia abajo las filas superiores (es decir, move_down_rows(y-1) )
+	let completas = 0;
 	for (var i = 0; i < this.height; i++) {
 		var completa = this.is_row_complete(i);
 		if (completa) {
+			completas++;
 			this.delete_row(i);
 			this.move_down_rows(i);
+			puntuacion = puntuacion + 100;
+			let puntuacionhtml = document.getElementById("puntuacion");
+			puntuacionhtml.innerHTML = puntuacion;
 		}
+	}
+	if (completas > 1) {
+		puntuacion = puntuacion + 100*completas;
+		let puntuacionhtml = document.getElementById("puntuacion");
+		puntuacionhtml.innerHTML = puntuacion;
+		var audio = new Audio('glup.mp3');
+		audio.play();
+	} else if (completas == 1) {
+		var audio = new Audio('glup.mp3');
+		audio.play();
 	}
 };
 
 Board.prototype.game_over = function() {
+	let fondo = document.getElementById("fondo");
+	fondo.pause();
+	Tetris.AUDIO = false;
 	alert("Game over, Refresh for restart.");
 }
 
@@ -572,6 +590,10 @@ Tetris.DIRECTION = {'Left':[-1, 0], 'Right':[1, 0], 'Down':[0, 1]};
 Tetris.BOARD_WIDTH = 10;
 Tetris.BOARD_HEIGHT = 20;
 Tetris.BOARD_COLOR='white';
+Tetris.AUDIO = false;
+
+
+let puntuacion = 0;
 
 Tetris.prototype.create_new_shape = function(){
 
@@ -589,9 +611,11 @@ Tetris.prototype.init = function(){
 	/**************
 	  EJERCICIO 4
 	***************/
+	puntuacion = 0;
+	let puntuacionhtml = document.getElementById("puntuacion");
+	puntuacionhtml.innerHTML = puntuacion;
 
 	// gestor de teclado
-
 	document.addEventListener('keydown', this.key_pressed.bind(this), false);
 
 	// Obtener una nueva pieza al azar y asignarla como pieza actual 
@@ -611,6 +635,11 @@ Tetris.prototype.init = function(){
 Tetris.prototype.key_pressed = function(e) { 
 
 	var key = e.keyCode ? e.keyCode : e.which;
+	if (!Tetris.AUDIO) {
+		let fondo = document.getElementById("fondo");
+		fondo.play();
+		Tetris.AUDIO = true;
+	}
 
         // TU CÓDIGO AQUÍ:
 	// en la variable key se guardará el código ASCII de la tecla que
@@ -649,6 +678,7 @@ Tetris.prototype.do_move = function(direction) {
 	/* Código que se pide en el EJERCICIO 6 */
 	// else if(direction=='Down')
 	// TU CÓDIGO AQUÍ: añade la pieza actual al grid. Crea una nueva pieza y dibújala en el tablero.
+
 	if (direction === "Space") {
 		while (this.current_shape.can_move(this.board, Tetris.DIRECTION['Down'][0], Tetris.DIRECTION['Down'][1])) {
 			this.do_move('Down');
@@ -660,9 +690,16 @@ Tetris.prototype.do_move = function(direction) {
 
 		if (this.current_shape.check_game_over(this.board)) {
 			clearInterval(this.loop);
+			var audio = new Audio('derrota.mp3');
+			audio.play();
 			this.board.game_over();
 		} else {
+			var audio = new Audio('pop.mp3');
+			audio.play();
 			this.board.draw_shape(this.current_shape);
+			puntuacion = puntuacion + 10;
+			let puntuacionhtml = document.getElementById("puntuacion");
+			puntuacionhtml.innerHTML = puntuacion;
 		}
 	}
 	else if (this.current_shape.can_move(this.board, Tetris.DIRECTION[direction][0], Tetris.DIRECTION[direction][1])) {
@@ -674,9 +711,16 @@ Tetris.prototype.do_move = function(direction) {
 
 		if (this.current_shape.check_game_over(this.board)) {
 			clearInterval(this.loop);
+			var audio = new Audio('derrota.mp3');
+			audio.play();
 			this.board.game_over();
 		} else {
+			var audio = new Audio('pop.mp3');
+			audio.play();
 			this.board.draw_shape(this.current_shape);
+			puntuacion = puntuacion + 10;
+			let puntuacionhtml = document.getElementById("puntuacion");
+			puntuacionhtml.innerHTML = puntuacion;
 		}
 	}
 }
