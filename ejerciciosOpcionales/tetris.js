@@ -565,7 +565,7 @@ Board.prototype.remove_complete_rows = function(){
 		puntuacionhtml.innerHTML = puntuacion;
 		var audio = new Audio('glup.mp3');
 		audio.play();
-	} else if (completas == 1) {
+	} else if (completas === 1) {
 		var audio = new Audio('glup.mp3');
 		audio.play();
 	}
