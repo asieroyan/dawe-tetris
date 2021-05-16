@@ -591,6 +591,7 @@ Tetris.BOARD_WIDTH = 10;
 Tetris.BOARD_HEIGHT = 20;
 Tetris.BOARD_COLOR='white';
 Tetris.AUDIO = false;
+Tetris.PAUSED = false;
 
 
 let puntuacion = 0;
@@ -647,23 +648,45 @@ Tetris.prototype.key_pressed = function(e) {
 	// a mover la pieza hacia la izquierda, la derecha, abajo o a rotarla?
 	switch (key) {
 		case 40: // key down
-			this.do_move('Down');
+			if (!Tetris.PAUSED) {
+				this.do_move('Down');
+			}
 			break;
 		case 38: // key up
-			this.do_rotate();
+			if (!Tetris.PAUSED) {
+				this.do_rotate();
+			}
 			break;
 		case 37: // key left
-			this.do_move('Left');
+			if (!Tetris.PAUSED) {
+				this.do_move('Left');
+			}
 			break;
 		case 39: // key right
-			this.do_move('Right');
+			if (!Tetris.PAUSED) {
+				this.do_move('Right');
+			}
 			break;
 		case 32: //space
-			this.do_move('Space');
+			if (!Tetris.PAUSED) {
+				this.do_move('Space');
+			}
 			break;
+		case 80: // p
+			this.pause();
 	}
 
 	/* Introduce el código para realizar la rotación en el EJERCICIO 8. Es decir, al pulsar la flecha arriba, rotar la pieza actual */
+}
+
+Tetris.prototype.pause = function() {
+	if (!Tetris.PAUSED) {
+		Tetris.PAUSED = true;
+		document.getElementById("paused").innerHTML = "Juego pausado";
+	} else {
+		Tetris.PAUSED = false;
+		document.getElementById("paused").innerHTML = "";
+	}
 }
 
 Tetris.prototype.do_move = function(direction) {
@@ -735,7 +758,11 @@ Tetris.prototype.do_rotate = function(){
 }
 
 Tetris.prototype.animate_shape = function() {
-	this.loop = setInterval(() => this.do_move('Down'), 1000);
+	this.loop = setInterval(() => {
+		if (!Tetris.PAUSED) {
+			this.do_move('Down')
+		}
+	}, 1000);
 }
 
 
